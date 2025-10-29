@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}Make Payment{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card glass border-0">
+            <div class="card-body text-center py-4">
+                <h1 class="display-6 fw-bold text-white mb-2">
+                    <i class="fas fa-mobile-alt me-3"></i>Complete Payment
+                </h1>
+                <p class="lead text-white-50">Secure M-Pesa payment in seconds</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Payment Summary -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-receipt me-2"></i>Order Summary</h5>
+            </div>
+            <div class="card-body">
+                {% if consumption_data.mandazi_quantity > 0 %}
+                <div class="d-flex justify-content-between mb-2">
+                    <span><i class="fas fa-cookie-bite me-2 text-warning"></i>{{ consumption_data.mandazi_quantity }} Mandazi</span>
+                    <span>KSh {{ consumption_data.mandazi_quantity|floatformat:0 }} × {{ consumption_data.mandazi_price }}</span>
+                    <strong>KSh {% widthratio consumption_data.mandazi_quantity 1 consumption_data.mandazi_price %}</strong>
+                </div>
+                {% endif %}
+                
+                {% if consumption_data.eggs_quantity > 0 %}
+                <div class="d-flex justify-content-between mb-2">
+                    <span><i class="fas fa-egg me-2 text-info"></i>{{ consumption_data.eggs_quantity }} Eggs</span>
+                    <span>KSh {{ consumption_data.eggs_quantity|floatformat:0 }} × {{ consumption_data.eggs_price }}</span>
+                    <strong>KSh {% widthratio consumption_data.eggs_quantity 1 consumption_data.eggs_price %}</strong>
+                </div>
+                {% endif %}
+                
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <h5>Total Amount:</h5>
+                    <h5 class="text-primary">KSh {{ consumption_data.total_amount }}</h5>
+                </div>
+            </div>
+        </div>
+        
+        <!-- M-Pesa Info -->
+        <div class="card mt-3">
+            <div class="card-body">
+                <h6><i class="fas fa-mobile-alt me-2 text-success"></i>M-Pesa Payment</h6>
+                <ul class="list-unstyled mb-0">
+                    <li><i class="fas fa-check text-success me-2"></i>Secure payment via Safaricom M-Pesa</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Instant payment confirmation</li>
+                    <li><i class="fas fa-check text-success me-2"></i>SMS receipt sent to your phone</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Form -->
+    <div class="col-md-6">
+        <div class="card border-0">
+            <div class="card-header bg-transparent border-0">
+                <h5 class="mb-0">
+                    <i class="fas fa-mobile-alt me-2 text-success"></i>
+                    M-Pesa Payment
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <form id="payment-form">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="phone-number" class="form-label fw-bold">
+                            <i class="fas fa-phone me-2"></i>Phone Number
+                        </label>
+                        <input type="tel" 
+                               class="form-control form-control-lg" 
+                               id="phone-number" 
+                               name="phone_number"
+                               value="{{ user_phone }}" 
+                               placeholder="+254712345678"
+                               style="height: 60px; font-size: 1.1rem;"
+                               required>
+                        <div class="form-text">
+                            <i class="fas fa-shield-alt me-1 text-success"></i>
+                            Your M-Pesa registered number
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-3">
+                        <button type="submit" class="btn btn-success btn-lg py-3" id="submit-payment">
+                            <i class="fas fa-paper-plane me-2"></i>
+                            Send Payment Request
+                        </button>
+                        <a href="{% url 'products:select_snacks' %}" class="btn btn-outline-secondary btn-lg">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Back to Selection
+                        </a>
+                    </div>
+                </form>
+                
+                <div id="payment-status" class="mt-4 text-center" style="display: none;">
+                    <div class="p-4 rounded" style="background: rgba(16, 185, 129, 0.1);">
+                        <div class="spinner-border text-success mb-3" role="status" id="loading-spinner">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="fw-bold text-success mb-2" id="status-message">Processing payment...</p>
+                        <small class="text-muted d-block mb-3" id="status-subtitle">Check your phone for M-Pesa prompt</small>
+                        
+                        <!-- Manual confirmation section (shows after payment sent) -->
+                        <div id="manual-section" class="mt-4" style="display: none;">
+                            <div class="alert alert-info">
+                                <h6><i class="fas fa-mobile-alt me-2"></i>Already completed M-Pesa payment?</h6>
+                                <p class="mb-2">If you've entered your M-Pesa PIN and received a confirmation SMS, click below:</p>
+                                <a href="#" class="btn btn-warning" id="manual-confirm-btn">
+                                    <i class="fas fa-check-circle me-2"></i>I've Completed Payment - Confirm Now
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Auto check buttons -->
+                        <div class="d-flex gap-2 justify-content-center mt-3" id="auto-buttons" style="display: none;">
+                            <button type="button" class="btn btn-outline-success btn-sm" id="manual-check-btn">
+                                <i class="fas fa-sync me-1"></i>Check Status Again
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Instructions -->
+        <div class="card mt-3">
+            <div class="card-body">
+                <h6 class="text-primary"><i class="fas fa-lightbulb me-2"></i>Payment Instructions</h6>
+                <ol class="mb-0">
+                    <li>Click "Send Payment Request" below</li>
+                    <li>Check your phone for M-Pesa prompt</li>
+                    <li>Enter your M-Pesa PIN</li>
+                    <li>Wait for confirmation</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% load static %}{% static 'js/payment.js' %}"></script>
+{% endblock %}

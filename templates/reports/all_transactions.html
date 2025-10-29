@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block title %}All Transactions{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2><i class="fas fa-list me-2"></i>All Transactions</h2>
+        <p class="text-muted">Complete transaction history for all buyers</p>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6><i class="fas fa-filter me-2"></i>Filter Transactions</h6>
+            </div>
+            <div class="card-body">
+                <form method="get" class="row g-3">
+                    <div class="col-md-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" name="status">
+                            <option value="">All Statuses</option>
+                            <option value="SUCCESS" {% if status_filter == 'SUCCESS' %}selected{% endif %}>Success</option>
+                            <option value="PENDING" {% if status_filter == 'PENDING' %}selected{% endif %}>Pending</option>
+                            <option value="FAILED" {% if status_filter == 'FAILED' %}selected{% endif %}>Failed</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="date_from" class="form-label">From Date</label>
+                        <input type="date" class="form-control" id="date_from" name="date_from" 
+                               value="{{ date_from }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="date_to" class="form-label">To Date</label>
+                        <input type="date" class="form-control" id="date_to" name="date_to" 
+                               value="{{ date_to }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">&nbsp;</label>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search me-2"></i>Filter
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transactions Table -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Transaction History</h5>
+                <div class="d-flex gap-2">
+                    <span class="badge bg-primary">{{ transactions.count }} transactions</span>
+                    <button class="btn btn-outline-primary btn-sm" onclick="window.print()">
+                        <i class="fas fa-print me-1"></i>Print
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if transactions %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date & Time</th>
+                                    <th>Buyer</th>
+                                    <th>Phone</th>
+                                    <th>Items</th>
+                                    <th>Amount</th>
+                                    <th>M-Pesa Receipt</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in transactions %}
+                                <tr>
+                                    <td><strong>#{{ transaction.id }}</strong></td>
+                                    <td>
+                                        <div>{{ transaction.created_at|date:"M d, Y" }}</div>
+                                        <small class="text-muted">{{ transaction.created_at|date:"H:i" }}</small>
+                                    </td>
+                                    <td>
+                                        <strong>{{ transaction.buyer.username }}</strong>
+                                        <br><small class="text-muted">{{ transaction.buyer.email }}</small>
+                                    </td>
+                                    <td>{{ transaction.phone_number }}</td>
+                                    <td>
+                                        <div class="d-flex flex-wrap gap-1">
+                                            {% if transaction.consumption.mandazi_quantity > 0 %}
+                                                <span class="badge" style="background: var(--gradient-mandazi); color: white;">
+                                                    🥯 {{ transaction.consumption.mandazi_quantity }} × KSh {{ transaction.consumption.mandazi_price }}
+                                                </span>
+                                            {% endif %}
+                                            {% if transaction.consumption.eggs_quantity > 0 %}
+                                                <span class="badge" style="background: var(--gradient-eggs); color: var(--dark-color);">
+                                                    🥚 {{ transaction.consumption.eggs_quantity }} × KSh {{ transaction.consumption.eggs_price }}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td><strong>KSh {{ transaction.amount }}</strong></td>
+                                    <td>
+                                        {% if transaction.mpesa_receipt_number %}
+                                            <code class="small">{{ transaction.mpesa_receipt_number }}</code>
+                                        {% else %}
+                                            <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if transaction.status == 'SUCCESS' %}
+                                            <span class="badge bg-success">Success</span>
+                                        {% elif transaction.status == 'FAILED' %}
+                                            <span class="badge bg-danger">Failed</span>
+                                        {% else %}
+                                            <span class="badge bg-warning">Pending</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            {% if transaction.status == 'PENDING' %}
+                                                <a href="{% url 'payments:simulate_callback' transaction.id %}" 
+                                                   class="btn btn-outline-success" 
+                                                   title="Simulate Success"
+                                                   onclick="return confirm('Mark this transaction as successful?')">
+                                                    <i class="fas fa-check"></i>
+                                                </a>
+                                            {% endif %}
+                                            <a href="{% url 'reports:buyer_report' transaction.buyer.id %}" 
+                                               class="btn btn-outline-info" 
+                                               title="Buyer Report">
+                                                <i class="fas fa-user"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Summary Statistics -->
+                    {% if transactions %}
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="text-success">
+                                        KSh {% for t in transactions %}{% if t.status == 'SUCCESS' %}{{ t.amount|add:0 }}{% endif %}{% endfor %}
+                                    </h5>
+                                    <p class="mb-0">Total Revenue</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="text-primary">{{ transactions|length }}</h5>
+                                    <p class="mb-0">Total Transactions</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="text-warning">
+                                        {% with pending_count=0 %}
+                                            {% for t in transactions %}
+                                                {% if t.status == 'PENDING' %}
+                                                    {% with pending_count=pending_count|add:1 %}{% endwith %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {{ pending_count }}
+                                        {% endwith %}
+                                    </h5>
+                                    <p class="mb-0">Pending Payments</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <h5>No Transactions Found</h5>
+                        <p class="text-muted">
+                            {% if status_filter or date_from or date_to %}
+                                No transactions match your filter criteria.
+                            {% else %}
+                                No transactions have been recorded yet.
+                            {% endif %}
+                        </p>
+                        {% if status_filter or date_from or date_to %}
+                            <a href="{% url 'reports:all_transactions' %}" class="btn btn-primary">
+                                <i class="fas fa-refresh me-2"></i>Clear Filters
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="mb-3">Quick Actions</h6>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{% url 'reports:daily_sales' %}" class="btn btn-info">
+                        <i class="fas fa-chart-bar me-2"></i>Daily Report
+                    </a>
+                    <a href="{% url 'payments:callback_monitor' %}" class="btn btn-warning">
+                        <i class="fas fa-satellite-dish me-2"></i>Callback Monitor
+                    </a>
+                    <a href="{% url 'accounts:manage_buyers' %}" class="btn btn-primary">
+                        <i class="fas fa-users me-2"></i>Manage Buyers
+                    </a>
+                    <a href="{% url 'accounts:dashboard' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-home me-2"></i>Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

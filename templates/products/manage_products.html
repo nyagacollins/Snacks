@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Products{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2><i class="fas fa-cog me-2"></i>Manage Products</h2>
+        <p class="text-muted">Update prices and availability for your snacks</p>
+    </div>
+</div>
+
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    {% if product.name == 'MANDAZI' %}
+                        <i class="fas fa-cookie-bite me-2 text-warning"></i>
+                    {% else %}
+                        <i class="fas fa-egg me-2 text-info"></i>
+                    {% endif %}
+                    {{ product.get_name_display }}
+                </h5>
+                {% if product.is_available %}
+                    <span class="badge bg-success">Available</span>
+                {% else %}
+                    <span class="badge bg-danger">Unavailable</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="text-primary">KSh {{ product.price }}</h3>
+                        <small class="text-muted">Current Price</small>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a href="{% url 'products:update_product_price' product.id %}" 
+                           class="btn btn-primary">
+                            <i class="fas fa-edit me-2"></i>Update Price
+                        </a>
+                    </div>
+                </div>
+                {% if product.description %}
+                <hr>
+                <p class="text-muted mb-0">{{ product.description }}</p>
+                {% endif %}
+            </div>
+            <div class="card-footer text-muted">
+                <small>Last updated: {{ product.updated_at|date:"M d, Y H:i" }}</small>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="text-center py-5">
+            <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+            <h5>No Products Found</h5>
+            <p class="text-muted">Products need to be created by an administrator.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

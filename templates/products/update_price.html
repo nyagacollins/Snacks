@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Update {{ product.get_name_display }} Price{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>
+            {% if product.name == 'MANDAZI' %}
+                <i class="fas fa-cookie-bite me-2 text-warning"></i>
+            {% else %}
+                <i class="fas fa-egg me-2 text-info"></i>
+            {% endif %}
+            Update {{ product.get_name_display }} Price
+        </h2>
+        <p class="text-muted">Current price: KSh {{ product.price }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                {% crispy form %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6><i class="fas fa-info-circle me-2"></i>Price Update Info</h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-success me-2"></i>Price changes apply immediately</li>
+                    <li><i class="fas fa-check text-success me-2"></i>All future purchases use new price</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Existing transactions remain unchanged</li>
+                </ul>
+                
+                <hr>
+                
+                <h6>Product Details:</h6>
+                <p><strong>Name:</strong> {{ product.get_name_display }}</p>
+                <p><strong>Current Price:</strong> KSh {{ product.price }}</p>
+                <p><strong>Status:</strong> 
+                    {% if product.is_available %}
+                        <span class="badge bg-success">Available</span>
+                    {% else %}
+                        <span class="badge bg-danger">Unavailable</span>
+                    {% endif %}
+                </p>
+                <p><strong>Last Updated:</strong> {{ product.updated_at|date:"M d, Y H:i" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

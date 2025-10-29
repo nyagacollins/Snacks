@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ buyer.username }} - Buyer Report{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>
+            <i class="fas fa-user-chart me-2"></i>
+            Buyer Report: {{ buyer.username }}
+        </h2>
+        <p class="text-muted">Detailed analytics for {{ buyer.username }}</p>
+    </div>
+</div>
+
+<!-- Buyer Info -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-user me-2"></i>Buyer Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>Username:</strong><br>
+                        {{ buyer.username }}
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Email:</strong><br>
+                        {{ buyer.email }}
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Phone:</strong><br>
+                        {{ buyer.phone_number }}
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Joined:</strong><br>
+                        {{ buyer.date_joined|date:"M d, Y" }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Analytics Cards -->
+<div class="row g-4 mb-4">
+    <!-- 30-Day Analytics -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h6><i class="fas fa-calendar-alt me-2"></i>Last 30 Days</h6>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="text-center p-3 rounded" style="background: rgba(16, 185, 129, 0.1);">
+                            <h4 class="text-success">KSh {{ analytics_30.total_spent|floatformat:2 }}</h4>
+                            <small>Total Spent</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center p-3 rounded" style="background: rgba(99, 102, 241, 0.1);">
+                            <h4 class="text-primary">{{ analytics_30.total_purchases }}</h4>
+                            <small>Purchases</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center p-3 rounded" style="background: rgba(245, 158, 11, 0.1);">
+                            <h4 class="text-warning">{{ analytics_30.total_mandazi_consumed }}</h4>
+                            <small>Mandazi</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center p-3 rounded" style="background: rgba(6, 182, 212, 0.1);">
+                            <h4 class="text-info">{{ analytics_30.total_eggs_consumed }}</h4>
+                            <small>Eggs</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 7-Day Analytics -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h6><i class="fas fa-calendar-week me-2"></i>Last 7 Days</h6>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="text-center p-3 rounded" style="background: rgba(16, 185, 129, 0.1);">
+                            <h4 class="text-success">KSh {{ analytics_7.total_spent|floatformat:2 }}</h4>
+                            <small>Total Spent</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center p-3 rounded" style="background: rgba(99, 102, 241, 0.1);">
+                            <h4 class="text-primary">{{ analytics_7.total_purchases }}</h4>
+                            <small>Purchases</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center p-3 rounded" style="background: rgba(245, 158, 11, 0.1);">
+                            <h4 class="text-warning">{{ analytics_7.total_mandazi_consumed }}</h4>
+                            <small>Mandazi</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center p-3 rounded" style="background: rgba(6, 182, 212, 0.1);">
+                            <h4 class="text-info">{{ analytics_7.total_eggs_consumed }}</h4>
+                            <small>Eggs</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Transactions -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h6><i class="fas fa-receipt me-2"></i>Recent Transactions</h6>
+            </div>
+            <div class="card-body">
+                {% if recent_transactions %}
+                    <div class="list-group list-group-flush">
+                        {% for transaction in recent_transactions %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-bold">KSh {{ transaction.amount }}</div>
+                                <small class="text-muted">{{ transaction.created_at|date:"M d, H:i" }}</small>
+                            </div>
+                            <div>
+                                {% if transaction.status == 'SUCCESS' %}
+                                    <span class="badge bg-success">Success</span>
+                                {% elif transaction.status == 'FAILED' %}
+                                    <span class="badge bg-danger">Failed</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Pending</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center py-3">No recent transactions</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Consumptions -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h6><i class="fas fa-chart-pie me-2"></i>Recent Consumptions</h6>
+            </div>
+            <div class="card-body">
+                {% if recent_consumptions %}
+                    <div class="list-group list-group-flush">
+                        {% for consumption in recent_consumptions %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="d-flex gap-2 mb-1">
+                                        {% if consumption.mandazi_quantity > 0 %}
+                                            <span class="badge" style="background: var(--gradient-mandazi); color: white;">
+                                                🥯 {{ consumption.mandazi_quantity }}
+                                            </span>
+                                        {% endif %}
+                                        {% if consumption.eggs_quantity > 0 %}
+                                            <span class="badge" style="background: var(--gradient-eggs); color: var(--dark-color);">
+                                                🥚 {{ consumption.eggs_quantity }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <small class="text-muted">{{ consumption.created_at|date:"M d, H:i" }}</small>
+                                </div>
+                                <div class="text-end">
+                                    <div class="fw-bold">KSh {{ consumption.total_amount }}</div>
+                                    {% if consumption.payment_status == 'PAID' %}
+                                        <span class="badge bg-success">Paid</span>
+                                    {% else %}
+                                        <span class="badge bg-warning">Pending</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center py-3">No recent consumptions</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Actions -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="mb-3">Actions</h6>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{% url 'accounts:manage_buyers' %}" class="btn btn-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Buyers
+                    </a>
+                    <a href="{% url 'reports:all_transactions' %}" class="btn btn-info">
+                        <i class="fas fa-list me-2"></i>All Transactions
+                    </a>
+                    <a href="{% url 'reports:daily_sales' %}" class="btn btn-success">
+                        <i class="fas fa-chart-bar me-2"></i>Daily Report
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

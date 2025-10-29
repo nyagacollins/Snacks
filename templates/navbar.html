@@ -1,0 +1,91 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'accounts:dashboard' %}">
+            <span class="fs-2 me-2 food-emoji">🍪</span>
+            <span class="fw-bold">Snacks Payment</span>
+        </a>
+        
+        {% if user.is_authenticated %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:dashboard' %}">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    
+                    {% if user.is_seller %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="buyersDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-users me-1"></i>Buyers
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'accounts:register_buyer' %}">Register New Buyer</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:manage_buyers' %}">Manage Buyers</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'products:manage_products' %}">
+                                <i class="fas fa-cog me-1"></i>Manage Products
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-chart-bar me-1"></i>Reports
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'reports:daily_sales' %}">Daily Sales</a></li>
+                                <li><a class="dropdown-item" href="{% url 'reports:all_transactions' %}">All Transactions</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    
+                    {% if user.is_buyer %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'products:select_snacks' %}">
+                                <i class="fas fa-shopping-cart me-1"></i>Buy Snacks
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="historyDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-history me-1"></i>History
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'payments:transaction_history' %}">Transactions</a></li>
+                                <li><a class="dropdown-item" href="{% url 'payments:consumption_history' %}">Consumption</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-1"></i>{{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><h6 class="dropdown-header">{{ user.get_role_display }}</h6></li>
+                            <li><hr class="dropdown-divider"></li>
+                            {% if user.is_buyer %}
+                                <li><a class="dropdown-item" href="{% url 'accounts:update_phone' %}">Update Phone</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            {% endif %}
+                            <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">
+                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</nav>

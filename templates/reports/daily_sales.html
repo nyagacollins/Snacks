@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block title %}Daily Sales Report{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2><i class="fas fa-chart-bar me-2"></i>Daily Sales Report</h2>
+        <p class="text-muted">View sales performance for {{ sales_summary.date|date:"F d, Y" }}</p>
+    </div>
+</div>
+
+<!-- Date Navigation -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="get" class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label for="date" class="form-label">Select Date</label>
+                        <input type="date" class="form-control" id="date" name="date" 
+                               value="{{ report_date|date:'Y-m-d' }}">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search me-2"></i>View Report
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex gap-2">
+                            {% for date in recent_dates %}
+                                <a href="?date={{ date|date:'Y-m-d' }}" 
+                                   class="btn btn-outline-secondary btn-sm">
+                                    {{ date|date:"M d" }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sales Summary Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-3 col-md-6">
+        <div class="card stats-card border-0">
+            <div class="card-body text-center">
+                <i class="fas fa-money-bill-wave fa-3x text-success mb-3"></i>
+                <h3>KSh {{ sales_summary.total_amount|floatformat:2 }}</h3>
+                <p class="card-title mb-0">Total Revenue</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6">
+        <div class="card stats-card border-0">
+            <div class="card-body text-center">
+                <i class="fas fa-receipt fa-3x text-primary mb-3"></i>
+                <h3>{{ sales_summary.total_transactions }}</h3>
+                <p class="card-title mb-0">Total Transactions</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6">
+        <div class="card stats-card border-0">
+            <div class="card-body text-center">
+                <i class="fas fa-cookie-bite fa-3x text-warning mb-3"></i>
+                <h3>{{ sales_summary.total_mandazi_sold }}</h3>
+                <p class="card-title mb-0">Mandazi Sold</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6">
+        <div class="card stats-card border-0">
+            <div class="card-body text-center">
+                <i class="fas fa-egg fa-3x text-info mb-3"></i>
+                <h3>{{ sales_summary.total_eggs_sold }}</h3>
+                <p class="card-title mb-0">Eggs Sold</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transactions Table -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="fas fa-list me-2"></i>
+                    Transactions for {{ sales_summary.date|date:"F d, Y" }}
+                </h5>
+                <span class="badge bg-primary">{{ sales_summary.transactions.count }} transactions</span>
+            </div>
+            <div class="card-body">
+                {% if sales_summary.transactions %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Buyer</th>
+                                    <th>Items</th>
+                                    <th>Amount</th>
+                                    <th>M-Pesa Receipt</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in sales_summary.transactions %}
+                                <tr>
+                                    <td>{{ transaction.created_at|date:"H:i" }}</td>
+                                    <td>
+                                        <strong>{{ transaction.buyer.username }}</strong>
+                                        <br><small class="text-muted">{{ transaction.phone_number }}</small>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-wrap gap-1">
+                                            {% if transaction.consumption.mandazi_quantity > 0 %}
+                                                <span class="badge" style="background: var(--gradient-mandazi); color: white;">
+                                                    🥯 {{ transaction.consumption.mandazi_quantity }}
+                                                </span>
+                                            {% endif %}
+                                            {% if transaction.consumption.eggs_quantity > 0 %}
+                                                <span class="badge" style="background: var(--gradient-eggs); color: var(--dark-color);">
+                                                    🥚 {{ transaction.consumption.eggs_quantity }}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td><strong>KSh {{ transaction.amount }}</strong></td>
+                                    <td>
+                                        {% if transaction.mpesa_receipt_number %}
+                                            <code class="small">{{ transaction.mpesa_receipt_number }}</code>
+                                        {% else %}
+                                            <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if transaction.status == 'SUCCESS' %}
+                                            <span class="badge bg-success">Success</span>
+                                        {% elif transaction.status == 'FAILED' %}
+                                            <span class="badge bg-danger">Failed</span>
+                                        {% else %}
+                                            <span class="badge bg-warning">Pending</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+                        <h5>No Sales Today</h5>
+                        <p class="text-muted">No transactions recorded for {{ sales_summary.date|date:"F d, Y" }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="mb-3">Quick Actions</h6>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{% url 'reports:all_transactions' %}" class="btn btn-info">
+                        <i class="fas fa-list me-2"></i>All Transactions
+                    </a>
+                    <a href="{% url 'accounts:manage_buyers' %}" class="btn btn-primary">
+                        <i class="fas fa-users me-2"></i>Manage Buyers
+                    </a>
+                    <a href="{% url 'products:manage_products' %}" class="btn btn-warning">
+                        <i class="fas fa-cog me-2"></i>Manage Products
+                    </a>
+                    <a href="{% url 'accounts:dashboard' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-home me-2"></i>Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

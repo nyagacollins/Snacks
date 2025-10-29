@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment Success{% endblock %}
+
+{% block extra_css %}
+<style>
+    .success-animation {
+        animation: bounce-in 0.8s ease-out;
+    }
+    
+    .success-icon {
+        font-size: 5rem;
+        color: var(--success-color);
+        animation: pulse-glow 2s ease-in-out infinite;
+    }
+    
+    .receipt-card {
+        background: var(--gradient-success);
+        color: rgb(0, 0, 0);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-xl);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Success Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card glass border-0 success-animation">
+            <div class="card-body text-center py-5">
+                <div class="success-icon mb-3">✅</div>
+                <h1 class="display-6 fw-bold text-white mb-2">Payment Successful!</h1>
+                <p class="lead text-white-50">Your payment has been processed successfully</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Receipt Details -->
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card receipt-card border-0">
+            <div class="card-header bg-transparent border-0 text-center">
+                <h4 class="mb-0">
+                    <i class="fas fa-receipt me-2"></i>
+                    Payment Receipt
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between">
+                            <strong>Transaction ID:</strong>
+                            <span>{{ transaction.id }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between">
+                            <strong>Amount:</strong>
+                            <span>KSh {{ transaction.amount }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between">
+                            <strong>Phone Number:</strong>
+                            <span>{{ transaction.phone_number }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between">
+                            <strong>Date:</strong>
+                            <span>{{ transaction.created_at|date:"M d, Y H:i" }}</span>
+                        </div>
+                    </div>
+                    {% if transaction.mpesa_receipt_number %}
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between">
+                            <strong>M-Pesa Receipt:</strong>
+                            <code class="bg-white text-dark px-2 py-1 rounded">{{ transaction.mpesa_receipt_number }}</code>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <hr class="my-4">
+                
+                <!-- Items Purchased -->
+                <h6 class="mb-3">Items Purchased:</h6>
+                <div class="row g-2">
+                    {% if transaction.consumption.mandazi_quantity > 0 %}
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background: rgba(255, 255, 255, 0.1);">
+                            <div class="d-flex align-items-center">
+                                <span class="me-2">🥯</span>
+                                <span>{{ transaction.consumption.mandazi_quantity }} Mandazi</span>
+                            </div>
+                            <span>KSh {% widthratio transaction.consumption.mandazi_quantity 1 transaction.consumption.mandazi_price %}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if transaction.consumption.eggs_quantity > 0 %}
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background: rgba(255, 255, 255, 0.1);">
+                            <div class="d-flex align-items-center">
+                                <span class="me-2">🥚</span>
+                                <span>{{ transaction.consumption.eggs_quantity }} Eggs</span>
+                            </div>
+                            <span>KSh {% widthratio transaction.consumption.eggs_quantity 1 transaction.consumption.eggs_price %}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="row mt-4">
+    <div class="col-12 text-center">
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="{% url 'accounts:dashboard' %}" class="btn btn-primary">
+                <i class="fas fa-home me-2"></i>Back to Dashboard
+            </a>
+            <a href="{% url 'products:select_snacks' %}" class="btn btn-success">
+                <i class="fas fa-shopping-cart me-2"></i>Buy More Snacks
+            </a>
+            <a href="{% url 'payments:transaction_history' %}" class="btn btn-info">
+                <i class="fas fa-history me-2"></i>View History
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Thank You Message -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card border-0" style="background: rgba(255, 248, 225, 0.9);">
+            <div class="card-body text-center py-4">
+                <h5 class="text-primary mb-2">
+                    <span class="food-emoji me-2">🙏</span>
+                    Thank You!
+                </h5>
+                <p class="text-muted mb-0">
+                    Enjoy your delicious snacks! Come back anytime for more.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

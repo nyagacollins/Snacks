@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}Consumption History{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2><i class="fas fa-chart-pie me-2"></i>Consumption History</h2>
+        <p class="text-muted">Track what you've consumed over time</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                {% if consumptions %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Items Consumed</th>
+                                    <th>Total Amount</th>
+                                    <th>Payment Status</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for consumption in consumptions %}
+                                <tr>
+                                    <td>{{ consumption.created_at|date:"M d, Y H:i" }}</td>
+                                    <td>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            {% if consumption.mandazi_quantity > 0 %}
+                                                <span class="badge" style="background: var(--gradient-mandazi); color: white;">
+                                                    🥯 {{ consumption.mandazi_quantity }} Mandazi
+                                                </span>
+                                            {% endif %}
+                                            {% if consumption.eggs_quantity > 0 %}
+                                                <span class="badge" style="background: var(--gradient-eggs); color: var(--dark-color);">
+                                                    🥚 {{ consumption.eggs_quantity }} Eggs
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td><strong>KSh {{ consumption.total_amount }}</strong></td>
+                                    <td>
+                                        {% if consumption.payment_status == 'PAID' %}
+                                            <span class="badge bg-success">Paid</span>
+                                        {% elif consumption.payment_status == 'FAILED' %}
+                                            <span class="badge bg-danger">Failed</span>
+                                        {% else %}
+                                            <span class="badge bg-warning">Pending</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="small text-muted">
+                                            {% if consumption.mandazi_quantity > 0 %}
+                                                <div>Mandazi: {{ consumption.mandazi_quantity }} × KSh {{ consumption.mandazi_price }} = KSh {% widthratio consumption.mandazi_quantity 1 consumption.mandazi_price %}</div>
+                                            {% endif %}
+                                            {% if consumption.eggs_quantity > 0 %}
+                                                <div>Eggs: {{ consumption.eggs_quantity }} × KSh {{ consumption.eggs_price }} = KSh {% widthratio consumption.eggs_quantity 1 consumption.eggs_price %}</div>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Summary Statistics -->
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h4 class="text-primary">{{ total_mandazi }}</h4>
+                                    <p class="mb-0">Total Mandazi Consumed</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h4 class="text-info">{{ total_eggs }}</h4>
+                                    <p class="mb-0">Total Eggs Consumed</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h4 class="text-success">KSh {{ total_spent }}</h4>
+                                    <p class="mb-0">Total Amount Spent</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-chart-pie fa-3x text-muted mb-3"></i>
+                        <h5>No Consumption History</h5>
+                        <p class="text-muted">You haven't made any purchases yet.</p>
+                        <a href="{% url 'products:select_snacks' %}" class="btn btn-primary">
+                            <i class="fas fa-shopping-cart me-2"></i>Make Your First Purchase
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6><i class="fas fa-bolt me-2"></i>Quick Actions</h6>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{% url 'products:select_snacks' %}" class="btn btn-success">
+                        <i class="fas fa-plus me-2"></i>Buy More Snacks
+                    </a>
+                    <a href="{% url 'payments:transaction_history' %}" class="btn btn-info">
+                        <i class="fas fa-receipt me-2"></i>View Transactions
+                    </a>
+                    <a href="{% url 'accounts:dashboard' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-home me-2"></i>Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

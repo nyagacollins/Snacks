@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Payment{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Manual Payment Confirmation
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success">
+                    <h6><i class="fas fa-check-circle me-2"></i>Complete Your Payment</h6>
+                    <p class="mb-0">
+                        <strong>Great!</strong> You've completed the M-Pesa payment. 
+                        Just enter your confirmation code below to finish the process.
+                    </p>
+                </div>
+                
+                <div class="alert alert-info">
+                    <h6><i class="fas fa-sms me-2"></i>Find Your Confirmation Code</h6>
+                    <p class="mb-2">Check your SMS messages for a text from <strong>M-PESA</strong> that looks like:</p>
+                    <div class="bg-light p-2 rounded font-monospace small">
+                        "QGH7X8Y9Z0 Confirmed. You have paid KSh 1.00 to..."
+                    </div>
+                    <p class="mb-0 mt-2"><strong>Enter the code at the beginning:</strong> QGH7X8Y9Z0</p>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Transaction Details:</strong>
+                    <ul class="list-unstyled mt-2">
+                        <li><strong>Amount:</strong> KSh {{ transaction.amount }}</li>
+                        <li><strong>Phone:</strong> {{ transaction.phone_number }}</li>
+                        <li><strong>Date:</strong> {{ transaction.created_at|date:"M d, Y H:i" }}</li>
+                    </ul>
+                </div>
+                
+                <form id="confirm-form">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="mpesa_code" class="form-label">
+                            <strong>M-Pesa Confirmation Code</strong>
+                        </label>
+                        <input type="text" 
+                               class="form-control form-control-lg text-center" 
+                               id="mpesa_code" 
+                               name="mpesa_code"
+                               placeholder="e.g., QGH7X8Y9Z0"
+                               style="letter-spacing: 2px; font-family: monospace;"
+                               required>
+                        <div class="form-text">
+                            Enter the confirmation code from your M-Pesa SMS
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg" id="confirm-btn">
+                            <i class="fas fa-check me-2"></i>Confirm with M-Pesa Code
+                        </button>
+                        
+                        <div class="text-center my-2">
+                            <small class="text-muted">OR</small>
+                        </div>
+                        
+                        <button type="button" class="btn btn-warning btn-lg" id="quick-confirm-btn">
+                            <i class="fas fa-bolt me-2"></i>Quick Confirm (I've Paid)
+                        </button>
+                        
+                        <a href="{% url 'accounts:dashboard' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                        </a>
+                    </div>
+                </form>
+                
+                <div id="confirm-result" class="mt-3" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('confirm-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const confirmBtn = document.getElementById('confirm-btn');
+    const resultDiv = document.getElementById('confirm-result');
+    const mpesaCode = document.getElementById('mpesa_code').value.trim();
+    
+    if (!mpesaCode) {
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = '<div class="alert alert-danger">Please enter the M-Pesa confirmation code</div>';
+        return;
+    }
+    
+    // Disable button and show loading
+    confirmBtn.disabled = true;
+    confirmBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Confirming...';
+    
+    // Prepare form data
+    const formData = new FormData();
+    formData.append('mpesa_code', mpesaCode);
+    formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+    
+    // Send confirmation request
+    fetch(window.location.href, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        resultDiv.style.display = 'block';
+        
+        if (data.success) {
+            resultDiv.innerHTML = `
+                <div class="alert alert-success">
+                    <h6>✅ Payment Confirmed!</h6>
+                    <p class="mb-0">${data.message}</p>
+                </div>
+            `;
+            
+            // Redirect to success page
+            setTimeout(() => {
+                window.location.href = '/payments/success/{{ transaction.id }}/';
+            }, 2000);
+        } else {
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <h6>❌ Confirmation Failed</h6>
+                    <p class="mb-0">${data.message}</p>
+                </div>
+            `;
+            
+            // Reset button
+            confirmBtn.disabled = false;
+            confirmBtn.innerHTML = '<i class="fas fa-check me-2"></i>Confirm Payment';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+            <div class="alert alert-danger">
+                <h6>❌ Network Error</h6>
+                <p class="mb-0">Failed to confirm payment. Please try again.</p>
+            </div>
+        `;
+        
+        // Reset button
+        confirmBtn.disabled = false;
+        confirmBtn.innerHTML = '<i class="fas fa-check me-2"></i>Confirm Payment';
+    });
+});
+
+// Auto-format M-Pesa code input
+document.getElementById('mpesa_code').addEventListener('input', function(e) {
+    this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+});
+
+// Quick confirm button
+document.getElementById('quick-confirm-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    if (confirm('Are you sure you have completed the M-Pesa payment and received a confirmation SMS?')) {
+        const confirmBtn = document.getElementById('confirm-btn');
+        const quickBtn = document.getElementById('quick-confirm-btn');
+        const resultDiv = document.getElementById('confirm-result');
+        
+        // Disable buttons
+        confirmBtn.disabled = true;
+        quickBtn.disabled = true;
+        quickBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Confirming...';
+        
+        // Prepare form data for quick confirmation
+        const formData = new FormData();
+        formData.append('quick_confirm', 'true');
+        formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+        
+        // Send quick confirmation request
+        fetch(window.location.href, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            resultDiv.style.display = 'block';
+            
+            if (data.success) {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        <h6>✅ Payment Confirmed!</h6>
+                        <p class="mb-0">${data.message}</p>
+                    </div>
+                `;
+                
+                // Redirect to success page
+                setTimeout(() => {
+                    window.location.href = '/payments/success/{{ transaction.id }}/';
+                }, 1500);
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h6>❌ Confirmation Failed</h6>
+                        <p class="mb-0">${data.message}</p>
+                    </div>
+                `;
+                
+                // Reset buttons
+                confirmBtn.disabled = false;
+                quickBtn.disabled = false;
+                quickBtn.innerHTML = '<i class="fas fa-bolt me-2"></i>Quick Confirm (I\'ve Paid)';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <h6>❌ Network Error</h6>
+                    <p class="mb-0">Failed to confirm payment. Please try again.</p>
+                </div>
+            `;
+            
+            // Reset buttons
+            confirmBtn.disabled = false;
+            quickBtn.disabled = false;
+            quickBtn.innerHTML = '<i class="fas fa-bolt me-2"></i>Quick Confirm (I\'ve Paid)';
+        });
+    }
+});
+</script>
+{% endblock %}
