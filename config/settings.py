@@ -1,20 +1,34 @@
 from pathlib import Path
 from decouple import config
-import os
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# -----------------------------
+# BASE DIRECTORY
+# -----------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# -----------------------------
+# SECURITY
+# -----------------------------
 SECRET_KEY = config('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
+# ALLOWED_HOSTS for Render deployment
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='.render.com').split(',')
 
-# Application definition
+# -----------------------------
+# DATABASE
+# -----------------------------
+# Use Render PostgreSQL
+DATABASES = {
+    'default': dj_database_url.parse(
+        config('DATABASE_URL', default='postgresql://snack_7f61_user:Ygo8xyN9J9VZwctfRlCPRM9WGB6ltLfc@dpg-d49jsj8dl3ps739lp5u0-a/snack_7f61')
+    )
+}
+
+# -----------------------------
+# APPLICATION DEFINITION
+# -----------------------------
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,8 +52,12 @@ LOCAL_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
+# -----------------------------
+# MIDDLEWARE
+# -----------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -48,8 +66,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# -----------------------------
+# URLS & WSGI
+# -----------------------------
 ROOT_URLCONF = 'config.urls'
+WSGI_APPLICATION = 'config.wsgi.application'
 
+# -----------------------------
+# TEMPLATES
+# -----------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -66,97 +91,79 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
-
-# Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# Custom User Model
+# -----------------------------
+# AUTHENTICATION
+# -----------------------------
 AUTH_USER_MODEL = 'accounts.User'
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'accounts:dashboard'
+LOGOUT_REDIRECT_URL = 'accounts:login'
 
-# Password validation
+# -----------------------------
+# PASSWORD VALIDATION
+# -----------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
-# Internationalization
+# -----------------------------
+# INTERNATIONALIZATION
+# -----------------------------
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Africa/Nairobi'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# -----------------------------
+# STATIC FILES
+# -----------------------------
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # optional: better caching
 
-# Media files
+# -----------------------------
+# MEDIA FILES
+# -----------------------------
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Default primary key field type
+# -----------------------------
+# DEFAULT PK FIELD TYPE
+# -----------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Logging Configuration
+# -----------------------------
+# LOGGING
+# -----------------------------
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
+        'verbose': {'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}', 'style': '{'},
+        'simple': {'format': '{levelname} {message}', 'style': '{'},
     },
     'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': 'mpesa.log',
-            'formatter': 'verbose',
-        },
+        'console': {'class': 'logging.StreamHandler', 'formatter': 'simple'},
+        'file': {'class': 'logging.FileHandler', 'filename': 'mpesa.log', 'formatter': 'verbose'},
     },
     'loggers': {
-        'apps.payments.mpesa': {
-            'handlers': ['console', 'file'],
-            'level': 'INFO',
-            'propagate': False,
-        },
+        'apps.payments.mpesa': {'handlers': ['console', 'file'], 'level': 'INFO', 'propagate': False},
     },
 }
 
-# Crispy Forms
+# -----------------------------
+# CRISPY FORMS
+# -----------------------------
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-# Login/Logout URLs
-LOGIN_URL = 'accounts:login'
-LOGIN_REDIRECT_URL = 'accounts:dashboard'
-LOGOUT_REDIRECT_URL = 'accounts:login'
-
-# M-Pesa Settings
+# -----------------------------
+# M-PESA CONFIGURATION
+# -----------------------------
 MPESA_CONSUMER_KEY = config('MPESA_CONSUMER_KEY')
 MPESA_CONSUMER_SECRET = config('MPESA_CONSUMER_SECRET')
 MPESA_SHORTCODE = config('MPESA_SHORTCODE')
@@ -165,12 +172,9 @@ MPESA_CALLBACK_URL = config('MPESA_CALLBACK_URL')
 MPESA_ENVIRONMENT = config('MPESA_ENVIRONMENT', default='sandbox')
 MPESA_TEST_MODE = config('MPESA_TEST_MODE', default=False, cast=bool)
 
-
-
-# Allow ngrok hosts
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'unsprayed-mindi-renunciable.ngrok-free.dev', '.ngrok-free.app']
-
-# CSRF trusted origins for ngrok
+# -----------------------------
+# NGROK (for local testing)
+# -----------------------------
 CSRF_TRUSTED_ORIGINS = [
     'https://unsprayed-mindi-renunciable.ngrok-free.dev',
     'https://*.ngrok-free.app',

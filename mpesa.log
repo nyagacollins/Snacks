@@ -2122,3 +2122,11 @@ INFO 2025-10-27 14:35:58,457 mpesa 50566 139839629420224 Response content: {
         }
         
 INFO 2025-10-27 14:35:58,457 mpesa 50566 139839629420224 Successfully obtained access token
+INFO 2025-10-31 15:15:39,211 mpesa 30372 140060727514816 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2025-10-31 15:15:39,953 mpesa 30372 140060727514816 Response status: 200
+INFO 2025-10-31 15:15:39,953 mpesa 30372 140060727514816 Response content: {
+            "access_token": "LnLKTjpjQa94kYShtmtadSAgJf7x",
+            "expires_in": "3599"
+        }
+        
+INFO 2025-10-31 15:15:39,953 mpesa 30372 140060727514816 Successfully obtained access token
