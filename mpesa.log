@@ -2130,3 +2130,405 @@ INFO 2025-10-31 15:15:39,953 mpesa 30372 140060727514816 Response content: {
         }
         
 INFO 2025-10-31 15:15:39,953 mpesa 30372 140060727514816 Successfully obtained access token
+INFO 2026-01-10 13:38:26,920 mpesa 20208 140715741935296 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:38:30,868 mpesa 20208 140715741935296 Response status: 200
+INFO 2026-01-10 13:38:30,869 mpesa 20208 140715741935296 Response content: {
+            "access_token": "Hc3JHslF6qCQIQPtmavN3NqGntjy",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-01-10 13:38:30,869 mpesa 20208 140715741935296 Successfully obtained access token
+INFO 2026-01-10 13:40:41,534 mpesa 20208 140715741935296 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:40:42,680 mpesa 20208 140715741935296 Response status: 200
+INFO 2026-01-10 13:40:42,681 mpesa 20208 140715741935296 Response content: {
+            "access_token": "BuHdnpeG2F4TEiSx3Te8RvN7Sww1",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-01-10 13:40:42,682 mpesa 20208 140715741935296 Successfully obtained access token
+INFO 2026-01-10 13:40:42,687 mpesa 20208 140715741935296 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:40:44,772 mpesa 20208 140715741935296 Response status: 200
+INFO 2026-01-10 13:40:44,772 mpesa 20208 140715741935296 Response content: {
+            "access_token": "PEbRztBjrAepQWTC5Sm1368U5HvA",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-01-10 13:40:44,773 mpesa 20208 140715741935296 Successfully obtained access token
+INFO 2026-01-10 13:40:44,777 mpesa 20208 140715741935296 Sending STK Push to: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+INFO 2026-01-10 13:40:44,778 mpesa 20208 140715741935296 Payload: {
+  "BusinessShortCode": "174379",
+  "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjYwMTEwMTM0MDQ0",
+  "Timestamp": "20260110134044",
+  "TransactionType": "CustomerPayBillOnline",
+  "Amount": 2,
+  "PartyA": "254792319554",
+  "PartyB": "174379",
+  "PhoneNumber": "254792319554",
+  "CallBackURL": "https://unsprayed-mindi-renunciable.ngrok-free.dev/payments/callback/",
+  "AccountReference": "SNACKS-65",
+  "TransactionDesc": "Payment for snacks - collins"
+}
+INFO 2026-01-10 13:40:45,559 mpesa 20208 140715741935296 STK Push response status: 200
+INFO 2026-01-10 13:40:45,559 mpesa 20208 140715741935296 STK Push response: {
+            "MerchantRequestID":"921e-49f3-8cc8-8846063deedf15894",
+            "CheckoutRequestID":"ws_CO_10012026134045278792319554",
+            "ResponseCode": "0",
+            "ResponseDescription":"Success. Request accepted for processing",
+            "CustomerMessage":"Success. Request accepted for processing"
+        }
+        
+INFO 2026-01-10 13:41:33,121 mpesa 20208 140715741935296 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:41:34,159 mpesa 20208 140715741935296 Response status: 200
+INFO 2026-01-10 13:41:34,161 mpesa 20208 140715741935296 Response content: {
+            "access_token": "sQ2DeSYeMrxntjkYJOYGBTHwLVJc",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-01-10 13:41:34,162 mpesa 20208 140715741935296 Successfully obtained access token
+INFO 2026-01-10 13:41:34,168 mpesa 20208 140715741935296 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:41:37,058 mpesa 20208 140715741935296 Response status: 200
+INFO 2026-01-10 13:41:37,059 mpesa 20208 140715741935296 Response content: {
+            "access_token": "C7vgA1hGQ8su6XsMtjhvVpVK0QAn",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-01-10 13:41:37,059 mpesa 20208 140715741935296 Successfully obtained access token
+INFO 2026-01-10 13:41:37,064 mpesa 20208 140715741935296 Sending STK Push to: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+INFO 2026-01-10 13:41:37,064 mpesa 20208 140715741935296 Payload: {
+  "BusinessShortCode": "174379",
+  "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjYwMTEwMTM0MTM3",
+  "Timestamp": "20260110134137",
+  "TransactionType": "CustomerPayBillOnline",
+  "Amount": 2,
+  "PartyA": "254705719636",
+  "PartyB": "174379",
+  "PhoneNumber": "254705719636",
+  "CallBackURL": "https://unsprayed-mindi-renunciable.ngrok-free.dev/payments/callback/",
+  "AccountReference": "SNACKS-66",
+  "TransactionDesc": "Payment for snacks - collins"
+}
+INFO 2026-01-10 13:41:38,470 mpesa 20208 140715741935296 STK Push response status: 403
+INFO 2026-01-10 13:41:38,471 mpesa 20208 140715741935296 STK Push response: <html style="height:100%"><head><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></head><body style="margin:0px;height:100%"><iframe id="main-iframe" src="/_Incapsula_Resource?CWUDNSAI=23&xinfo=44-288372659-0%200NNN%20RT%281768041697167%20626%29%20q%280%20-1%20-1%20-1%29%20r%280%20-1%29%20B15%2811%2c6926146%2c0%29%20U6&incident_id=922000214173486010-1571657657563612524&edet=15&cinfo=0b000000&rpinfo=0&cip=105.163.0.107&mth=POST" frameborder=0 width="100%" height="100%" marginheight="0px" marginwidth="0px">Request unsuccessful. Incapsula incident ID: 922000214173486010-1571657657563612524</iframe></body></html>
+ERROR 2026-01-10 13:41:38,471 mpesa 20208 140715741935296 Network error during STK Push: 403 Client Error: Forbidden for url: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+INFO 2026-01-10 13:41:42,306 mpesa 20208 140715741935296 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:41:43,782 mpesa 20208 140715741935296 Response status: 200
+INFO 2026-01-10 13:41:43,783 mpesa 20208 140715741935296 Response content: {
+            "access_token": "55ainKUbfjBGJ4NyJJE7GxNbjCZF",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-01-10 13:41:43,783 mpesa 20208 140715741935296 Successfully obtained access token
+INFO 2026-01-10 13:41:43,786 mpesa 20208 140715741935296 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:41:45,317 mpesa 20208 140715741935296 Response status: 200
+INFO 2026-01-10 13:41:45,318 mpesa 20208 140715741935296 Response content: {
+            "access_token": "RFE9wxBbNVtAloinnRoGXw9pAyGN",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-01-10 13:41:45,319 mpesa 20208 140715741935296 Successfully obtained access token
+INFO 2026-01-10 13:41:45,323 mpesa 20208 140715741935296 Sending STK Push to: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+INFO 2026-01-10 13:41:45,325 mpesa 20208 140715741935296 Payload: {
+  "BusinessShortCode": "174379",
+  "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjYwMTEwMTM0MTQ1",
+  "Timestamp": "20260110134145",
+  "TransactionType": "CustomerPayBillOnline",
+  "Amount": 2,
+  "PartyA": "254705719636",
+  "PartyB": "174379",
+  "PhoneNumber": "254705719636",
+  "CallBackURL": "https://unsprayed-mindi-renunciable.ngrok-free.dev/payments/callback/",
+  "AccountReference": "SNACKS-67",
+  "TransactionDesc": "Payment for snacks - collins"
+}
+INFO 2026-01-10 13:41:47,715 mpesa 20208 140715741935296 STK Push response status: 403
+INFO 2026-01-10 13:41:47,715 mpesa 20208 140715741935296 STK Push response: <html style="height:100%"><head><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></head><body style="margin:0px;height:100%"><iframe id="main-iframe" src="/_Incapsula_Resource?CWUDNSAI=23&xinfo=49-533750765-0%200NNN%20RT%281768041706430%20538%29%20q%280%20-1%20-1%20-1%29%20r%280%20-1%29%20B15%2811%2c6926146%2c0%29%20U6&incident_id=922000214173486010-2911714847217026417&edet=15&cinfo=0b000000&rpinfo=0&cip=105.163.0.107&mth=POST" frameborder=0 width="100%" height="100%" marginheight="0px" marginwidth="0px">Request unsuccessful. Incapsula incident ID: 922000214173486010-2911714847217026417</iframe></body></html>
+ERROR 2026-01-10 13:41:47,716 mpesa 20208 140715741935296 Network error during STK Push: 403 Client Error: Forbidden for url: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+INFO 2026-01-10 13:41:53,010 mpesa 20208 140715741935296 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:41:53,459 mpesa 20208 140715741935296 Response status: 403
+INFO 2026-01-10 13:41:53,460 mpesa 20208 140715741935296 Response content: <html style="height:100%"><head><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></head><body style="margin:0px;height:100%"><iframe id="main-iframe" src="/_Incapsula_Resource?CWUDNSAI=23&xinfo=37-55448458-0%200NNN%20RT%281768041713114%20240%29%20q%280%20-1%20-1%20-1%29%20r%280%20-1%29%20B15%2811%2c6926146%2c0%29%20U16&incident_id=922000214173486010-287088129659766117&edet=15&cinfo=0b000000&rpinfo=0&cip=105.163.0.107&mth=GET" frameborder=0 width="100%" height="100%" marginheight="0px" marginwidth="0px">Request unsuccessful. Incapsula incident ID: 922000214173486010-287088129659766117</iframe></body></html>
+ERROR 2026-01-10 13:41:53,461 mpesa 20208 140715741935296 Error getting access token: 403 Client Error: Forbidden for url: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+ERROR 2026-01-10 13:41:53,461 mpesa 20208 140715741935296 Response content: <html style="height:100%"><head><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></head><body style="margin:0px;height:100%"><iframe id="main-iframe" src="/_Incapsula_Resource?CWUDNSAI=23&xinfo=37-55448458-0%200NNN%20RT%281768041713114%20240%29%20q%280%20-1%20-1%20-1%29%20r%280%20-1%29%20B15%2811%2c6926146%2c0%29%20U16&incident_id=922000214173486010-287088129659766117&edet=15&cinfo=0b000000&rpinfo=0&cip=105.163.0.107&mth=GET" frameborder=0 width="100%" height="100%" marginheight="0px" marginwidth="0px">Request unsuccessful. Incapsula incident ID: 922000214173486010-287088129659766117</iframe></body></html>
+INFO 2026-01-10 13:41:58,620 mpesa 20208 140715741935296 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:42:00,651 mpesa 20208 140715741935296 Response status: 403
+INFO 2026-01-10 13:42:00,652 mpesa 20208 140715741935296 Response content: <html style="height:100%"><head><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></head><body style="margin:0px;height:100%"><iframe id="main-iframe" src="/_Incapsula_Resource?CWUDNSAI=23&xinfo=48-494057501-0%200NNN%20RT%281768041719747%20285%29%20q%280%20-1%20-1%20-1%29%20r%280%20-1%29%20B15%2811%2c6926146%2c0%29%20U16&incident_id=922000214173486010-2732306207767922032&edet=15&cinfo=0b000000&rpinfo=0&cip=105.163.0.107&mth=GET" frameborder=0 width="100%" height="100%" marginheight="0px" marginwidth="0px">Request unsuccessful. Incapsula incident ID: 922000214173486010-2732306207767922032</iframe></body></html>
+ERROR 2026-01-10 13:42:00,652 mpesa 20208 140715741935296 Error getting access token: 403 Client Error: Forbidden for url: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+ERROR 2026-01-10 13:42:00,653 mpesa 20208 140715741935296 Response content: <html style="height:100%"><head><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></head><body style="margin:0px;height:100%"><iframe id="main-iframe" src="/_Incapsula_Resource?CWUDNSAI=23&xinfo=48-494057501-0%200NNN%20RT%281768041719747%20285%29%20q%280%20-1%20-1%20-1%29%20r%280%20-1%29%20B15%2811%2c6926146%2c0%29%20U16&incident_id=922000214173486010-2732306207767922032&edet=15&cinfo=0b000000&rpinfo=0&cip=105.163.0.107&mth=GET" frameborder=0 width="100%" height="100%" marginheight="0px" marginwidth="0px">Request unsuccessful. Incapsula incident ID: 922000214173486010-2732306207767922032</iframe></body></html>
+INFO 2026-01-10 13:42:33,117 mpesa 21924 140032558646976 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:42:34,147 mpesa 21924 140032558646976 Response status: 403
+INFO 2026-01-10 13:42:34,148 mpesa 21924 140032558646976 Response content: <html style="height:100%"><head><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></head><body style="margin:0px;height:100%"><iframe id="main-iframe" src="/_Incapsula_Resource?CWUDNSAI=23&xinfo=52-715272679-0%200NNN%20RT%281768041753374%20406%29%20q%280%20-1%20-1%20-1%29%20r%280%20-1%29%20B15%2811%2c6926146%2c0%29%20U16&incident_id=922000214173486010-3883076797047899508&edet=15&cinfo=0b000000&rpinfo=0&cip=105.163.0.107&mth=GET" frameborder=0 width="100%" height="100%" marginheight="0px" marginwidth="0px">Request unsuccessful. Incapsula incident ID: 922000214173486010-3883076797047899508</iframe></body></html>
+ERROR 2026-01-10 13:42:34,149 mpesa 21924 140032558646976 Error getting access token: 403 Client Error: Forbidden for url: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+ERROR 2026-01-10 13:42:34,149 mpesa 21924 140032558646976 Response content: <html style="height:100%"><head><META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></head><body style="margin:0px;height:100%"><iframe id="main-iframe" src="/_Incapsula_Resource?CWUDNSAI=23&xinfo=52-715272679-0%200NNN%20RT%281768041753374%20406%29%20q%280%20-1%20-1%20-1%29%20r%280%20-1%29%20B15%2811%2c6926146%2c0%29%20U16&incident_id=922000214173486010-3883076797047899508&edet=15&cinfo=0b000000&rpinfo=0&cip=105.163.0.107&mth=GET" frameborder=0 width="100%" height="100%" marginheight="0px" marginwidth="0px">Request unsuccessful. Incapsula incident ID: 922000214173486010-3883076797047899508</iframe></body></html>
+INFO 2026-01-10 13:42:51,779 mpesa 21924 140032558646976 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:42:52,962 mpesa 21924 140032558646976 Response status: 200
+INFO 2026-01-10 13:42:52,962 mpesa 21924 140032558646976 Response content: {
+            "access_token": "SGdw72DSZAjfA0z0ougb3zLinA5K",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-01-10 13:42:52,962 mpesa 21924 140032558646976 Successfully obtained access token
+INFO 2026-01-10 13:42:52,964 mpesa 21924 140032558646976 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:42:54,023 mpesa 21924 140032558646976 Response status: 200
+INFO 2026-01-10 13:42:54,023 mpesa 21924 140032558646976 Response content: {
+            "access_token": "aexC2CTl8HxJBCV7NTLMDyxy4A7c",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-01-10 13:42:54,023 mpesa 21924 140032558646976 Successfully obtained access token
+INFO 2026-01-10 13:42:54,026 mpesa 21924 140032558646976 Sending STK Push to: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+INFO 2026-01-10 13:42:54,026 mpesa 21924 140032558646976 Payload: {
+  "BusinessShortCode": "174379",
+  "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjYwMTEwMTM0MjU0",
+  "Timestamp": "20260110134254",
+  "TransactionType": "CustomerPayBillOnline",
+  "Amount": 2,
+  "PartyA": "254792319554",
+  "PartyB": "174379",
+  "PhoneNumber": "254792319554",
+  "CallBackURL": "https://unsprayed-mindi-renunciable.ngrok-free.dev/payments/callback/",
+  "AccountReference": "SNACKS-71",
+  "TransactionDesc": "Payment for snacks - collins"
+}
+INFO 2026-01-10 13:42:55,036 mpesa 21924 140032558646976 STK Push response status: 200
+INFO 2026-01-10 13:42:55,036 mpesa 21924 140032558646976 STK Push response: {
+            "MerchantRequestID":"28a3-45c5-9c47-ec89d8c2c3183099",
+            "CheckoutRequestID":"ws_CO_10012026134254651792319554",
+            "ResponseCode": "0",
+            "ResponseDescription":"Success. Request accepted for processing",
+            "CustomerMessage":"Success. Request accepted for processing"
+        }
+        
+INFO 2026-01-10 13:44:04,522 mpesa 21924 140032558646976 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:44:15,564 mpesa 21924 140032558646976 Response status: 200
+INFO 2026-01-10 13:44:15,564 mpesa 21924 140032558646976 Response content: {
+            "access_token": "TYwCg6G60u8atH01Z15sZG3lDvDU",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-01-10 13:44:15,564 mpesa 21924 140032558646976 Successfully obtained access token
+INFO 2026-01-10 13:44:15,566 mpesa 21924 140032558646976 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-01-10 13:44:16,244 mpesa 21924 140032558646976 Response status: 200
+INFO 2026-01-10 13:44:16,245 mpesa 21924 140032558646976 Response content: {
+            "access_token": "ll6LzIfAcMfEzPwj9KbrCdGzu1vI",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-01-10 13:44:16,245 mpesa 21924 140032558646976 Successfully obtained access token
+INFO 2026-01-10 13:44:16,248 mpesa 21924 140032558646976 Sending STK Push to: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+INFO 2026-01-10 13:44:16,248 mpesa 21924 140032558646976 Payload: {
+  "BusinessShortCode": "174379",
+  "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjYwMTEwMTM0NDE2",
+  "Timestamp": "20260110134416",
+  "TransactionType": "CustomerPayBillOnline",
+  "Amount": 1,
+  "PartyA": "254705719636",
+  "PartyB": "174379",
+  "PhoneNumber": "254705719636",
+  "CallBackURL": "https://unsprayed-mindi-renunciable.ngrok-free.dev/payments/callback/",
+  "AccountReference": "SNACKS-72",
+  "TransactionDesc": "Payment for snacks - collins"
+}
+INFO 2026-01-10 13:44:17,407 mpesa 21924 140032558646976 STK Push response status: 200
+INFO 2026-01-10 13:44:17,407 mpesa 21924 140032558646976 STK Push response: {
+            "MerchantRequestID":"7662-4678-8b7c-14b5bd7d8fba15456",
+            "CheckoutRequestID":"ws_CO_10012026134417052705719636",
+            "ResponseCode": "0",
+            "ResponseDescription":"Success. Request accepted for processing",
+            "CustomerMessage":"Success. Request accepted for processing"
+        }
+        
+INFO 2026-03-31 18:06:30,178 mpesa 63130 140294183741120 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:06:30,876 mpesa 63130 140294183741120 Response status: 200
+INFO 2026-03-31 18:06:30,877 mpesa 63130 140294183741120 Response content: {
+            "access_token": "ToayuzmtarawKuJ0Hluxw0cd1EBS",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:06:30,877 mpesa 63130 140294183741120 Successfully obtained access token
+INFO 2026-03-31 18:06:30,881 mpesa 63130 140294183741120 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:06:31,243 mpesa 63130 140294183741120 Response status: 200
+INFO 2026-03-31 18:06:31,243 mpesa 63130 140294183741120 Response content: {
+            "access_token": "SARAxAuQuZVHelIk2sKlspGBgg9I",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:06:31,245 mpesa 63130 140294183741120 Successfully obtained access token
+INFO 2026-03-31 18:06:31,251 mpesa 63130 140294183741120 Sending STK Push to: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+INFO 2026-03-31 18:06:31,252 mpesa 63130 140294183741120 Payload: {
+  "BusinessShortCode": "174379",
+  "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjYwMzMxMTgwNjMx",
+  "Timestamp": "20260331180631",
+  "TransactionType": "CustomerPayBillOnline",
+  "Amount": 2,
+  "PartyA": "254725526795",
+  "PartyB": "174379",
+  "PhoneNumber": "254725526795",
+  "CallBackURL": "https://unsprayed-mindi-renunciable.ngrok-free.dev/payments/callback/",
+  "AccountReference": "SNACKS-73",
+  "TransactionDesc": "Payment for snacks - collins"
+}
+INFO 2026-03-31 18:06:31,993 mpesa 63130 140294183741120 STK Push response status: 200
+INFO 2026-03-31 18:06:31,994 mpesa 63130 140294183741120 STK Push response: {
+            "MerchantRequestID":"17e3-4585-96bd-74b1858f3fee83186",
+            "CheckoutRequestID":"ws_CO_31032026180631672725526795",
+            "ResponseCode": "0",
+            "ResponseDescription":"Success. Request accepted for processing",
+            "CustomerMessage":"Success. Request accepted for processing"
+        }
+        
+INFO 2026-03-31 18:09:46,866 mpesa 63130 140294183741120 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:09:47,505 mpesa 63130 140294183741120 Response status: 200
+INFO 2026-03-31 18:09:47,505 mpesa 63130 140294183741120 Response content: {
+            "access_token": "ocWaXTJ60S6AvRyyJ5n6XwPnKvHr",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:09:47,506 mpesa 63130 140294183741120 Successfully obtained access token
+INFO 2026-03-31 18:09:47,510 mpesa 63130 140294183741120 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:09:48,110 mpesa 63130 140294183741120 Response status: 200
+INFO 2026-03-31 18:09:48,111 mpesa 63130 140294183741120 Response content: {
+            "access_token": "fIgn3t1ZLRbbUOovSdf2mtSenrx1",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:09:48,112 mpesa 63130 140294183741120 Successfully obtained access token
+INFO 2026-03-31 18:09:48,117 mpesa 63130 140294183741120 Sending STK Push to: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+INFO 2026-03-31 18:09:48,118 mpesa 63130 140294183741120 Payload: {
+  "BusinessShortCode": "174379",
+  "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjYwMzMxMTgwOTQ4",
+  "Timestamp": "20260331180948",
+  "TransactionType": "CustomerPayBillOnline",
+  "Amount": 1,
+  "PartyA": "254705719636",
+  "PartyB": "174379",
+  "PhoneNumber": "254705719636",
+  "CallBackURL": "https://unsprayed-mindi-renunciable.ngrok-free.dev/payments/callback/",
+  "AccountReference": "SNACKS-74",
+  "TransactionDesc": "Payment for snacks - collins"
+}
+INFO 2026-03-31 18:09:48,891 mpesa 63130 140294183741120 STK Push response status: 200
+INFO 2026-03-31 18:09:48,891 mpesa 63130 140294183741120 STK Push response: {
+            "MerchantRequestID":"17e3-4585-96bd-74b1858f3fee83908",
+            "CheckoutRequestID":"ws_CO_31032026180948630705719636",
+            "ResponseCode": "0",
+            "ResponseDescription":"Success. Request accepted for processing",
+            "CustomerMessage":"Success. Request accepted for processing"
+        }
+        
+INFO 2026-03-31 18:11:12,988 mpesa 63130 140294083303104 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:11:13,586 mpesa 63130 140294083303104 Response status: 200
+INFO 2026-03-31 18:11:13,587 mpesa 63130 140294083303104 Response content: {
+            "access_token": "ngWlHo7q8EIkqFYkng2EQfHSAoK4",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:11:13,588 mpesa 63130 140294083303104 Successfully obtained access token
+INFO 2026-03-31 18:11:22,928 mpesa 63130 140294083303104 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:11:23,288 mpesa 63130 140294083303104 Response status: 200
+INFO 2026-03-31 18:11:23,289 mpesa 63130 140294083303104 Response content: {
+            "access_token": "XoDAqBsD6cPFElOenXecGkpov9ur",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:11:23,289 mpesa 63130 140294083303104 Successfully obtained access token
+INFO 2026-03-31 18:11:40,467 mpesa 63130 140294083303104 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:11:41,124 mpesa 63130 140294083303104 Response status: 200
+INFO 2026-03-31 18:11:41,124 mpesa 63130 140294083303104 Response content: {
+            "access_token": "yr9Fo5Y8j8HA7hVGzcd0YWky7ssG",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:11:41,125 mpesa 63130 140294083303104 Successfully obtained access token
+INFO 2026-03-31 18:12:05,571 mpesa 63130 140294083303104 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:12:06,226 mpesa 63130 140294083303104 Response status: 200
+INFO 2026-03-31 18:12:06,227 mpesa 63130 140294083303104 Response content: {
+            "access_token": "eY56x7lzJEDS1e4JRgSbAR4NmpeK",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:12:06,227 mpesa 63130 140294083303104 Successfully obtained access token
+INFO 2026-03-31 18:13:26,432 mpesa 63130 140294083303104 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:13:27,085 mpesa 63130 140294083303104 Response status: 200
+INFO 2026-03-31 18:13:27,085 mpesa 63130 140294083303104 Response content: {
+            "access_token": "ewPwerwzDGwnyweTEUV3s58JLHLn",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:13:27,085 mpesa 63130 140294083303104 Successfully obtained access token
+INFO 2026-03-31 18:13:27,088 mpesa 63130 140294083303104 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:13:27,596 mpesa 63130 140294083303104 Response status: 200
+INFO 2026-03-31 18:13:27,596 mpesa 63130 140294083303104 Response content: {
+            "access_token": "NwxYk0tCoBx8EPExeNUssK6zMCUs",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:13:27,597 mpesa 63130 140294083303104 Successfully obtained access token
+INFO 2026-03-31 18:13:27,603 mpesa 63130 140294083303104 Sending STK Push to: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+INFO 2026-03-31 18:13:27,604 mpesa 63130 140294083303104 Payload: {
+  "BusinessShortCode": "174379",
+  "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjYwMzMxMTgxMzI3",
+  "Timestamp": "20260331181327",
+  "TransactionType": "CustomerPayBillOnline",
+  "Amount": 1,
+  "PartyA": "254705719636",
+  "PartyB": "174379",
+  "PhoneNumber": "254705719636",
+  "CallBackURL": "https://unsprayed-mindi-renunciable.ngrok-free.dev/payments/callback/",
+  "AccountReference": "SNACKS-75",
+  "TransactionDesc": "Payment for snacks - benja"
+}
+INFO 2026-03-31 18:13:28,478 mpesa 63130 140294083303104 STK Push response status: 200
+INFO 2026-03-31 18:13:28,478 mpesa 63130 140294083303104 STK Push response: {
+            "MerchantRequestID":"17e3-4585-96bd-74b1858f3fee84625",
+            "CheckoutRequestID":"ws_CO_31032026181328090705719636",
+            "ResponseCode": "0",
+            "ResponseDescription":"Success. Request accepted for processing",
+            "CustomerMessage":"Success. Request accepted for processing"
+        }
+        
+INFO 2026-03-31 18:16:52,688 mpesa 65170 140448212301504 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:16:53,192 mpesa 65170 140448212301504 Response status: 200
+INFO 2026-03-31 18:16:53,193 mpesa 65170 140448212301504 Response content: {
+            "access_token": "FI3PYf1SvyAYndCbK6BC16nA95FV",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:16:53,193 mpesa 65170 140448212301504 Successfully obtained access token
+INFO 2026-03-31 18:16:53,196 mpesa 65170 140448212301504 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:16:53,717 mpesa 65170 140448212301504 Response status: 200
+INFO 2026-03-31 18:16:53,717 mpesa 65170 140448212301504 Response content: {
+            "access_token": "H87XeQE7fuZRTVOUGqFvAguNTrCQ",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:16:53,718 mpesa 65170 140448212301504 Successfully obtained access token
+INFO 2026-03-31 18:16:53,720 mpesa 65170 140448212301504 Sending STK Push to: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
+INFO 2026-03-31 18:16:53,721 mpesa 65170 140448212301504 Payload: {
+  "BusinessShortCode": "174379",
+  "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjYwMzMxMTgxNjUz",
+  "Timestamp": "20260331181653",
+  "TransactionType": "CustomerPayBillOnline",
+  "Amount": 1,
+  "PartyA": "254705719636",
+  "PartyB": "174379",
+  "PhoneNumber": "254705719636",
+  "CallBackURL": "https://unsprayed-mindi-renunciable.ngrok-free.dev/payments/callback/",
+  "AccountReference": "SNACKS-76",
+  "TransactionDesc": "Payment for snacks - benja"
+}
+INFO 2026-03-31 18:16:54,452 mpesa 65170 140448212301504 STK Push response status: 200
+INFO 2026-03-31 18:16:54,452 mpesa 65170 140448212301504 STK Push response: {
+            "MerchantRequestID":"6814-43a7-8e14-ef061c74f29b91265",
+            "CheckoutRequestID":"ws_CO_31032026181654226705719636",
+            "ResponseCode": "0",
+            "ResponseDescription":"Success. Request accepted for processing",
+            "CustomerMessage":"Success. Request accepted for processing"
+        }
+        
+INFO 2026-03-31 18:17:40,586 mpesa 65170 140448212301504 Requesting access token from: https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+INFO 2026-03-31 18:17:41,347 mpesa 65170 140448212301504 Response status: 200
+INFO 2026-03-31 18:17:41,348 mpesa 65170 140448212301504 Response content: {
+            "access_token": "sxcCztENvsreopCN3RMYqKDrJobF",
+            "expires_in": "3599"
+        }
+        
+INFO 2026-03-31 18:17:41,348 mpesa 65170 140448212301504 Successfully obtained access token

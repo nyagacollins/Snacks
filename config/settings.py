@@ -15,16 +15,26 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 # ALLOWED_HOSTS for Render deployment
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='.render.com').split(',')
+# Allow all ngrok subdomains automatically
+ALLOWED_HOSTS += ['.ngrok-free.app', '.ngrok-free.dev', '.ngrok.io']
 
 # -----------------------------
 # DATABASE
 # -----------------------------
-# Use Render PostgreSQL
-DATABASES = {
-    'default': dj_database_url.parse(
-        config('DATABASE_URL', default='postgresql://snack_7f61_user:Ygo8xyN9J9VZwctfRlCPRM9WGB6ltLfc@dpg-d49jsj8dl3ps739lp5u0-a/snack_7f61')
-    )
-}
+# Use SQLite for local development, PostgreSQL for production
+if config('DATABASE_URL', default=None):
+    # Production database (PostgreSQL)
+    DATABASES = {
+        'default': dj_database_url.parse(config('DATABASE_URL'))
+    }
+else:
+    # Local development database (SQLite)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # -----------------------------
 # APPLICATION DEFINITION
@@ -175,7 +185,16 @@ MPESA_TEST_MODE = config('MPESA_TEST_MODE', default=False, cast=bool)
 # -----------------------------
 # NGROK (for local testing)
 # -----------------------------
+_callback_url = config('MPESA_CALLBACK_URL', default='')
 CSRF_TRUSTED_ORIGINS = [
-    'https://unsprayed-mindi-renunciable.ngrok-free.dev',
     'https://*.ngrok-free.app',
+    'https://*.ngrok-free.dev',
+    'https://*.ngrok.io',
 ]
+# Also add the exact callback origin if set
+if _callback_url:
+    from urllib.parse import urlparse
+    _parsed = urlparse(_callback_url)
+    if _parsed.scheme and _parsed.netloc:
+        CSRF_TRUSTED_ORIGINS.append(f'{_parsed.scheme}://{_parsed.netloc}')
+# ---------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
